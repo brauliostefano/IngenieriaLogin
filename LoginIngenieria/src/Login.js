@@ -7,7 +7,6 @@ function Login() {
   const history = useHistory("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [attempts, setAttempts] = useState(0);
 
   const login = (event) => {
     event.preventDefault();
@@ -29,11 +28,9 @@ function Login() {
           alert("Por favor ingresa tus datos nuevamente.");
         } else {
           alert(e.message);
-        }
-
-        setAttempts(attempts + 1);
+        } 
         alert(
-          "La contraseña es invalida o el usuario no ingresó la contraseña correcta."
+            "La contraseña es invalida o el usuario no ingresó la contraseña correcta."
         );
 
 

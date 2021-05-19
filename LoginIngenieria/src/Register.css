@@ -115,9 +115,9 @@
   vertical-align: middle;
   font-weight: bold;
   justify-content: center;
-  background-color: seagreen;
+  background-color: #606770;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 20px;
   line-height: 48px;
   padding: 0 16px;
@@ -128,7 +128,7 @@
 }
 
 .register__register:hover{
-  color: aqua;
+  color: rgb(153, 153, 153);
 }
 
 /* formato dia */
