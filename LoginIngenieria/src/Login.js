@@ -8,8 +8,9 @@ function Login() {
   const [email, setEmail] = useState("test@email.com");
   const [password, setPassword] = useState("secret1");
 
+  // Buscar los intentos del email en la colleccion "user_auth_fails"
   const getUserFails = async() => {
-    const res = await db.collection("user_auth_fails").doc('test@email.com')
+    const res = await db.collection("user_auth_fails").doc(email)
         .get()
     if(res){
       return res.data();
@@ -17,6 +18,7 @@ function Login() {
     return null;
   }
 
+  // Actualizar los intentos del email en la colleccion "user_auth_fails"
   const setUserFails = async(email,failsNumber) => {
     await db.collection("user_auth_fails").doc(email)
         .set({
@@ -26,6 +28,7 @@ function Login() {
   
   const login = async(event) => {
     event.preventDefault();
+    // Obtener numero intentos anteriores
     let userFails = await getUserFails();
     if(userFails == undefined || userFails.fails < 3){
       auth
@@ -34,6 +37,7 @@ function Login() {
           history.push("/");
         })
         .catch((e) => {
+          // Aumentar el contador del correo electronico del campo fails
           setUserFails(email,userFails == undefined ? 1 : userFails.fails + 1);
           if (
             e.message ===
