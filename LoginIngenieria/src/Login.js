@@ -1,40 +1,60 @@
-import React, { useState } from "react";
-import { auth } from "./firebase";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "./firebase";
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
 
 function Login() {
   const history = useHistory("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test@email.com");
+  const [password, setPassword] = useState("secret1");
 
-  const login = (event) => {
+  const getUserFails = async() => {
+    const res = await db.collection("user_auth_fails").doc('test@email.com')
+        .get()
+    if(res){
+      return res.data();
+    }
+    return null;
+  }
+
+  const setUserFails = async(email,failsNumber) => {
+    await db.collection("user_auth_fails").doc(email)
+        .set({
+          fails: failsNumber,
+        })
+  }
+  
+  const login = async(event) => {
     event.preventDefault();
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((auth) => {
-        history.push("/");
-      })
-      .catch((e) => {
-        if (
-          e.message ===
-          "La contraseña es invalida o el usuario no ingresó la contraseña correcta."
-        ) {
-          alert("Por favor ingresa tus datos nuevamente.");
-        } else if (
-          e.message ===
-          "No hay un usuario asociado a esta cuenta o la cuenta ha sido eliminada."
-        ) {
-          alert("Por favor ingresa tus datos nuevamente.");
-        } else {
-          alert(e.message);
-        } 
-        alert(
+    let userFails = await getUserFails();
+    if(userFails == undefined || userFails.fails < 3){
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then((auth) => {
+          history.push("/");
+        })
+        .catch((e) => {
+          setUserFails(email,userFails == undefined ? 1 : userFails.fails + 1);
+          if (
+            e.message ===
             "La contraseña es invalida o el usuario no ingresó la contraseña correcta."
-        );
-
-
-      });
+          ) {
+            alert("Por favor ingresa tus datos nuevamente.");
+          } else if (
+            e.message ===
+            "No hay un usuario asociado a esta cuenta o la cuenta ha sido eliminada."
+          ) {
+            alert("Por favor ingresa tus datos nuevamente.");
+          } else {
+            alert(e.message);
+          } 
+          alert(
+              "La contraseña es invalida o el usuario no ingresó la contraseña correcta."
+          );
+        });
+      }else{
+        alert("Cuenta inhabilitada.");
+      }
     }
   
   return (
@@ -48,6 +68,7 @@ function Login() {
               type="email"
               placeholder="correo electronico"
               onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </center>
           <center>
@@ -55,6 +76,7 @@ function Login() {
               type="password"
               placeholder="contraseña"
               onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </center>
           <center>
