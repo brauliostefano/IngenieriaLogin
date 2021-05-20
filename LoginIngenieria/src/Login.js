@@ -10,20 +10,24 @@ function Login() {
 
   // Buscar los intentos del email en la colleccion "user_auth_fails"
   const getUserFails = async() => {
-    const res = await db.collection("user_auth_fails").doc(email)
-        .get()
-    if(res){
-      return res.data();
+    if(email.length > 0){
+      const res = await db.collection("user_auth_fails").doc(email)
+          .get()
+      if(res){
+        return res.data();
+      }
     }
     return null;
   }
 
   // Actualizar los intentos del email en la colleccion "user_auth_fails"
   const setUserFails = async(email,failsNumber) => {
-    await db.collection("user_auth_fails").doc(email)
-        .set({
-          fails: failsNumber,
-        })
+    if(email.length > 0){
+      await db.collection("user_auth_fails").doc(email)
+          .set({
+            fails: failsNumber,
+          })
+    }
   }
   
   const login = async(event) => {
