@@ -10,6 +10,7 @@ function Login() {
 
   // Buscar los intentos del email en la colleccion "user_auth_fails"
   const getUserFails = async() => {
+    const db = firestore.database();  // const db = database.database();
     const res = await db.collection("user_auth_fails").doc(email)
         .get()
     if(res){
