@@ -28,15 +28,13 @@ function Login() {
           alert("Por favor ingresa tus datos nuevamente.");
         } else {
           alert(e.message);
-        } 
+        }
         alert(
-            "La contraseña es invalida o el usuario no ingresó la contraseña correcta."
+          "La contraseña es invalida o el usuario no ingresó la contraseña correcta."
         );
-
-
       });
-    }
-  
+  };
+
   return (
     <div className="login">
       <img src="" className="login__logo" alt="" />
@@ -45,16 +43,17 @@ function Login() {
         <form>
           <center>
             <input
+              required
               type="email"
               placeholder="correo electronico"
-              onChange={(e) => setEmail(e.target.value)}
+              required onChange={(e) => setEmail(e.target.value)}
             />
           </center>
           <center>
             <input
               type="password"
               placeholder="contraseña"
-              onChange={(e) => setPassword(e.target.value)}
+              required onChange={(e) => setPassword(e.target.value)}
             />
           </center>
           <center>
@@ -65,7 +64,7 @@ function Login() {
           <center>
             <div className="sideinfo">
               <h5>¿olvidaste tu contraseña?</h5>
-              <h5 className="dot">.</h5>
+              <h5 className="dot"></h5>
               <Link to="/register" style={{ textDecoration: "none" }}>
                 <h5 className="rtd">registrate</h5>
               </Link>

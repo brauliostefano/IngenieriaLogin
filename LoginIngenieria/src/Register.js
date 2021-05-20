@@ -18,6 +18,7 @@ function Register() {
     auth.createUserWithEmailAndPassword(email, password).then((auth) => {
       if (auth.user) {
         auth.user
+
           .updateProfile({
             displayName: firstName + " " + lastName,
             photoURL:
@@ -53,51 +54,51 @@ function Register() {
         <form>
           <div className="row">
             <input
+              required
               onChange={(e) => {
                 setFirstName(e.target.value);
               }}
               className="register__name"
-              type="name" //cambiar a español
-              placeholder="First Name"
-              required
+              type="name"
+              placeholder="Primer nombre"
             />
             <input
+              required
               onChange={(e) => {
                 setLastName(e.target.value);
               }}
               className="register__name"
-              type="name" //cambiar a español
-              placeholder="Last Name"
-              required
+              type="name"
+              placeholder="Apellido(s)"
             />
           </div>
           <center>
             <input
+              required
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              type="mail" //cambiar a español
-              placeholder="Email"
-              required
+              type="mail"
+              placeholder="Correo"
             />
           </center>
           <center>
             <input
+              required
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              type="password" //cambiar a español
-              placeholder="New Password"
-              required
+              type="password"
+              placeholder="Contraseña"
             />
           </center>
           <h5 className="register__date">Fecha de nacimiento</h5>
           <div className="row">
             <select
               className="register__date2"
-              onChange={(e) => setBirthday([...birthday, e.target.value])}
+              required onChange={(e) => setBirthday([...birthday, e.target.value])}
             >
-              <option value="Day">Day</option>
+              <option value="Day">Dìa</option>
               <option value="Day">01</option>
               <option value="Day">02</option>
               <option value="Day">03</option>
@@ -135,24 +136,25 @@ function Register() {
               className="register__date3"
               onChange={(e) => setBirthday([...birthday, e.target.value])}
             >
-              <option value="Day">Month</option>
-              <option value="Day">Jan</option>
-              <option value="Day">Feb</option>
-              <option value="Day">Mar</option>
-              <option value="Day">Apr</option>
-              <option value="Day">Jun</option>
-              <option value="Day">Jul</option>
-              <option value="Day">Aug</option>
-              <option value="Day">Sep</option>
-              <option value="Day">Oct</option>
-              <option value="Day">Nov</option>
-              <option value="Day">Dec</option>
+              <option value="Month">Mes</option>
+              <option value="Month">Enero</option>
+              <option value="Month">Febrero</option>
+              <option value="Month">Marzo</option>
+              <option value="Month">Abril</option>
+              <option value="Month">Junio</option>
+              <option value="Month">Julio</option>
+              <option value="Month">Agosto</option>
+              <option value="Month">Septiembre</option>
+              <option value="Month">Octubre</option>
+              <option value="Month">Noviembre</option>
+              <option value="Month">Diciembre</option>
             </select>
 
             <select
               className="register__date3"
-              onChange={(e) => setBirthday([...birthday, e.target.value])}
+              required onChange={(e) => setBirthday([...birthday, e.target.value])}
             >
+              <option value="Year">Año</option>
               <option value="2018">2020</option>
               <option value="2018">2019</option>
               <option value="2018">2018</option>
@@ -276,12 +278,11 @@ function Register() {
             <div className="wrapper">
               <label>femenino</label>
               <input
-                
+                required
                 onChange={(e) => setGender(e.target.value)}
                 type="radio"
                 name="gender"
                 value="female"
-                required
               />
             </div>
 
@@ -315,8 +316,11 @@ function Register() {
 
           <center>
             <button
-              onClick={register} type="submit" className="register__register"> 
-              Sing up
+              onClick={register}
+              type="submit"
+              className="register__register"
+            >
+              Registrarte
             </button>
           </center>
 
